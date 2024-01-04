@@ -41,11 +41,11 @@ I define the following dotcopy config:
 ```yaml
 files:
   - ".config/kitty/kitty.conf":
-    template: "kitty.conf"
-    slots:
-      - "{font}":
-        laptop: "FiraCode Nerd Font"
-        desktop: "Hasklug Nerd Font"
+      template: "kitty.conf"
+      slots:
+        - "{font}":
+          laptop: "FiraCode Nerd Font"
+          desktop: "Hasklug Nerd Font"
 ```
 
 Now, if I replace the font parameter in a local kitty.conf, I can run `dotcopy build` to build the kitty.conf and put it in the correct place. Dotcopy will automatically detect which profile to use with either the `-p` tag or the system hostname

@@ -1,7 +1,7 @@
 files:
   - ".config/kitty/kitty.conf":
-    template: "kitty.conf"
-    slots:
+    	template: "kitty.conf"
+    	slots:
       - "{font}":
-        laptop: "FiraCode Nerd Font"
-        desktop: "Hasklug Nerd Font"
+        	laptop: "FiraCode Nerd Font"
+        	desktop: "Hasklug Nerd Font"
