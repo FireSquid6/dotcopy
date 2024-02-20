@@ -5,14 +5,14 @@ import (
 )
 
 type Filesystem interface {
-	readFile(filepath string) (string, error)
-	writeFile(filepath string, content string) error
-	fileExists(filepath string) (bool, error)
+	ReadFile(filepath string) (string, error)
+	WriteFile(filepath string, content string) error
+	FileExists(filepath string) (bool, error)
 }
 
 type RealFilesystem struct{}
 
-func (fs RealFilesystem) readFile(filepath string) (string, error) {
+func (fs RealFilesystem) ReadFile(filepath string) (string, error) {
 	content, err := os.ReadFile(filepath)
 
 	if err != nil {
@@ -22,7 +22,7 @@ func (fs RealFilesystem) readFile(filepath string) (string, error) {
 	return string(content), nil
 }
 
-func (fs RealFilesystem) writeFile(filepath string, content string) error {
+func (fs RealFilesystem) WriteFile(filepath string, content string) error {
 	err := os.WriteFile(filepath, []byte(content), 0644)
 
 	if err != nil {
@@ -32,7 +32,7 @@ func (fs RealFilesystem) writeFile(filepath string, content string) error {
 	return nil
 }
 
-func (fs RealFilesystem) fileExists(filepath string) (bool, error) {
+func (fs RealFilesystem) FileExists(filepath string) (bool, error) {
 	_, err := os.Stat(filepath)
 
 	if os.IsNotExist(err) {
@@ -45,7 +45,7 @@ type MockFilesystem struct {
 	files map[string]string
 }
 
-func (fs MockFilesystem) readFile(filepath string) (string, error) {
+func (fs MockFilesystem) ReadFile(filepath string) (string, error) {
 	content, ok := fs.files[filepath]
 
 	if !ok {
@@ -55,12 +55,12 @@ func (fs MockFilesystem) readFile(filepath string) (string, error) {
 	return content, nil
 }
 
-func (fs MockFilesystem) writeFile(filepath string, content string) error {
+func (fs MockFilesystem) WriteFile(filepath string, content string) error {
 	fs.files[filepath] = content
 	return nil
 }
 
-func (fs MockFilesystem) fileExists(filepath string) (bool, error) {
+func (fs MockFilesystem) FileExists(filepath string) (bool, error) {
 	_, ok := fs.files[filepath]
 
 	if !ok {
