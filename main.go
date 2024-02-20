@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+	// I'm like 90% sure this doesn't work right
 	log.Println("Starting watcher")
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
@@ -39,4 +40,12 @@ func main() {
 	}
 
 	<-make(chan struct{})
+}
+
+func Compile() {
+	// filesystem := RealFilesystem{}
+	// figure out where the dotfiles are located
+	// parse the dotfiles using ParseDotfiles
+	// for each dotfile, compile it using CompileDotfile
+	// for each compiled dotfile, write it to the output directory
 }
