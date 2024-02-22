@@ -69,3 +69,7 @@ func (fs MockFilesystem) FileExists(filepath string) (bool, error) {
 
 	return true, nil
 }
+
+func MakeMockFilesystem(files map[string]string) MockFilesystem {
+	return MockFilesystem{files: files}
+}
