@@ -71,3 +71,23 @@ func unmarshalYaml(fs Filesystem, filepath string) ([]DotcopyYaml, error) {
 
 	return yamlData, nil
 }
+
+// ugly
+func FindRootFilepath(fs Filesystem, expectedPath string, defaultLocation string) (string, error) {
+	val, err := fs.FileExists(expectedPath)
+	if err != nil {
+		return defaultLocation, err
+	}
+
+	if val {
+		text, err := fs.ReadFile(expectedPath)
+
+		if err != nil {
+			return defaultLocation, err
+		}
+
+		return text, nil
+	}
+
+	return expectedPath, err
+}
