@@ -10,11 +10,9 @@ func CompileDotfile(dotfile Dotfile) (string, string) {
 	// return compiledText, dotfile.CompiledFilepath
 	slots := getSlots(dotfile.SlotText)
 
-	for _, line := range strings.Split(dotfile.TemplateText, "\n") {
-		for _, slot := range slots {
-			if strings.Contains(line, slot.slotText) {
-				compiledText = strings.ReplaceAll(compiledText, slot.slotText, slot.insert)
-			}
+	for _, slot := range slots {
+		if strings.Contains(compiledText, slot.slotText) {
+			compiledText = strings.ReplaceAll(compiledText, slot.slotText, slot.insert)
 		}
 	}
 
@@ -28,7 +26,7 @@ type Slot struct {
 
 func getSlots(slotfile string) []Slot {
 	slots := []Slot{}
-	state := "inside" // whether we are inside or outside of a slot
+	state := "outside" // whether we are inside or outside of a slot
 	currentSlot := Slot{}
 
 	lines := strings.Split(slotfile, "\n")
@@ -36,6 +34,7 @@ func getSlots(slotfile string) []Slot {
 	for _, line := range lines {
 		if state == "inside" {
 			if strings.HasPrefix(line, "---") {
+				currentSlot.insert = strings.TrimSuffix(currentSlot.insert, "\n")
 				slots = append(slots, currentSlot)
 				state = "outside"
 			} else {
