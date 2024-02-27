@@ -14,7 +14,6 @@ type RealFilesystem struct{}
 
 func (fs RealFilesystem) ReadFile(filepath string) (string, error) {
 	content, err := os.ReadFile(filepath)
-
 	if err != nil {
 		return "", err
 	}
@@ -24,7 +23,6 @@ func (fs RealFilesystem) ReadFile(filepath string) (string, error) {
 
 func (fs RealFilesystem) WriteFile(filepath string, content string) error {
 	err := os.WriteFile(filepath, []byte(content), 0644)
-
 	if err != nil {
 		return err
 	}
@@ -72,4 +70,8 @@ func (fs MockFilesystem) FileExists(filepath string) (bool, error) {
 
 func MakeMockFilesystem(files map[string]string) MockFilesystem {
 	return MockFilesystem{files: files}
+}
+
+func MakeRealFilesystem() RealFilesystem {
+	return RealFilesystem{}
 }

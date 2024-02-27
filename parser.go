@@ -77,7 +77,7 @@ func unmarshalYaml(fs Filesystem, filepath string) ([]DotcopyYaml, error) {
 	return yamlData, nil
 }
 
-func ParseLocalConfig(fs Filesystem, filepath string) (LocalConfig, error) {
+func ParseLocalConfig(fs Filesystem) (LocalConfig, error) {
 	dirname, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatal(err)
@@ -87,6 +87,8 @@ func ParseLocalConfig(fs Filesystem, filepath string) (LocalConfig, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	filepath := path.Join(dirname, ".config/dotcopy/localconfig.yaml")
 
 	localConfig := LocalConfig{
 		RootFilepath:     path.Join(dirname, "dotfiles"),

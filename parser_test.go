@@ -6,7 +6,6 @@ import (
 )
 
 func TestParseDotfiles(t *testing.T) {
-	// create a new mock filesystem
 	fs := MakeMockFilesystem(map[string]string{
 		"/dotfiles/dotcopy.yaml": `---
 - template: template.txt
@@ -16,20 +15,16 @@ func TestParseDotfiles(t *testing.T) {
 		"/dotfiles/machine/slotfile.txt": "slot text",
 	})
 
-	// parse the dotfiles
 	dotfiles, err := ParseDotfiles(fs, LocalConfig{
 		RootFilepath:     "/dotfiles",
 		MachineDirectory: "machine",
 	})
-	// check for errors
 	if err != nil {
 		t.Errorf("unexpected error: %s", err)
 	}
-	// result should be a single dotfile
 	if len(dotfiles) != 1 {
 		t.Errorf("expected 1 dotfile, got %d", len(dotfiles))
 	}
-	// check the dotfile's fields
 	expected := Dotfile{
 		TemplateText:     "template text",
 		SlotText:         "slot text",
