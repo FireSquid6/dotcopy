@@ -1,6 +1,10 @@
 package main
 
 import (
+	"log"
+	"os"
+	"path"
+
 	"gopkg.in/yaml.v2"
 )
 
@@ -18,10 +22,13 @@ type DotcopyYaml struct {
 	Location string `yaml:"location"`
 }
 
-func ParseDotfiles(fs Filesystem, rootFilepath string) ([]Dotfile, error) {
-	// read the root file as an array of dotcopy yaml objects
-	yamlData, err := unmarshalYaml(fs, rootFilepath)
+type LocalConfig struct {
+	RootFilepath     string `yaml:"root_filepath"`
+	MachineDirectory string `yaml:"machine_directory"`
+}
 
+func ParseDotfiles(fs Filesystem, localConfig LocalConfig) ([]Dotfile, error) {
+	yamlData, err := unmarshalYaml(fs, path.Join(localConfig.RootFilepath, "dotcopy.yaml"))
 	if err != nil {
 		return nil, err
 	}
@@ -30,8 +37,8 @@ func ParseDotfiles(fs Filesystem, rootFilepath string) ([]Dotfile, error) {
 
 	for _, yamlObj := range yamlData {
 		dotfile := Dotfile{
-			TemplateFilepath: yamlObj.Template,
-			SlotFilepath:     yamlObj.Slotfile,
+			TemplateFilepath: path.Join(localConfig.RootFilepath, yamlObj.Template),
+			SlotFilepath:     path.Join(localConfig.RootFilepath, localConfig.MachineDirectory, yamlObj.Slotfile),
 			CompiledFilepath: yamlObj.Location,
 			TemplateText:     "",
 			SlotText:         "",
@@ -52,12 +59,10 @@ func ParseDotfiles(fs Filesystem, rootFilepath string) ([]Dotfile, error) {
 	}
 
 	return dotfiles, nil
-
 }
 
 func unmarshalYaml(fs Filesystem, filepath string) ([]DotcopyYaml, error) {
 	rootFileText, err := fs.ReadFile(filepath)
-
 	if err != nil {
 		return nil, err
 	}
@@ -72,22 +77,30 @@ func unmarshalYaml(fs Filesystem, filepath string) ([]DotcopyYaml, error) {
 	return yamlData, nil
 }
 
-// ugly
-func FindRootFilepath(fs Filesystem, expectedPath string, defaultLocation string) (string, error) {
-	val, err := fs.FileExists(expectedPath)
+func ParseLocalConfig(fs Filesystem, filepath string) (LocalConfig, error) {
+	dirname, err := os.UserHomeDir()
 	if err != nil {
-		return defaultLocation, err
+		log.Fatal(err)
 	}
 
-	if val {
-		text, err := fs.ReadFile(expectedPath)
-
-		if err != nil {
-			return defaultLocation, err
-		}
-
-		return text, nil
+	hostname, err := os.Hostname()
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	return expectedPath, err
+	localConfig := LocalConfig{
+		RootFilepath:     path.Join(dirname, "dotfiles"),
+		MachineDirectory: hostname,
+	}
+	localConfigText, err := fs.ReadFile(filepath)
+	if err != nil {
+		return localConfig, err
+	}
+
+	err = yaml.Unmarshal([]byte(localConfigText), &localConfig)
+	if err != nil {
+		return localConfig, err
+	}
+
+	return localConfig, nil
 }
