@@ -13,5 +13,3 @@ on_update () {
 while true; do
 inotifywait -e modify,create,delete -r $1 && on_update 
 done
-
-
