@@ -3,6 +3,9 @@
 on_update () {
   notify-send "Dotcopy: File change detected, rebuilding..."
 
+  echo "\n"
+  ./dotcopy build
+  echo "\n"
 
   notify-send "Dotcopy: Rebuilt dotfiles. Make sure to reload i3, polybar, and other programs to see the changes."
 }

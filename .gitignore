@@ -21,3 +21,6 @@
 go.work
 
 .envrc
+
+# the executable file
+dotcopy

@@ -2,11 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/urfave/cli/v2"
 	"log"
 	"os"
-
-	"github.com/radovskyb/watcher"
-	"github.com/urfave/cli/v2"
 )
 
 func main() {
