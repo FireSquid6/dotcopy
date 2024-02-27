@@ -101,8 +101,3 @@ func Watch() error {
 
 	return nil
 }
-
-// TODO:
-// make a cli with commands:
-// - build - runs Dotcopy() and gives diagnostic notification
-// - watch - starts the file watcher
