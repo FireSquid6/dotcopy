@@ -99,30 +99,7 @@ const (
 )
 
 func Watch() error {
-	fs := MakeRealFilesystem()
-	localconfig, err := ParseLocalConfig(fs)
-	if err != nil {
-		return err
-	}
-
-	log.Println("Watching", localconfig.RootFilepath)
-
-	// send notification using notify-send on update
-	w := watcher.New()
-	if err := w.AddRecursive(localconfig.RootFilepath); err != nil {
-		log.Fatalln(err)
-	}
-
-	for {
-		select {
-		case event := <-w.Event:
-			fmt.Println(event) // Print the event's info.
-		case err := <-w.Error:
-			log.Fatalln(err)
-		case <-w.Closed:
-			return nil
-		}
-	}
+	// run the bash script
 
 	return nil
 }

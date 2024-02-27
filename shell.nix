@@ -5,6 +5,8 @@ in
 with pkgs; mkShell {
   buildInputs = [
     nodejs_20
+    inotify-tools
+    libnotify
     go
   ];
 }
