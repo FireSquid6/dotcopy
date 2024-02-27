@@ -4,11 +4,17 @@ import (
 	"strings"
 )
 
-func CompileDotfile(dotfile Dotfile) (string, string) {
+func CompileDotfile(dotfile Dotfile, globalVars []GlobalVar) (string, string) {
 	compiledText := dotfile.TemplateText
 	// iterate through the lines of the SlotText using a FSM and generate compiledText
 	// return compiledText, dotfile.CompiledFilepath
 	slots := getSlots(dotfile.SlotText)
+
+	for _, globalVar := range globalVars {
+		if strings.Contains(dotfile.TemplateText, globalVar.Name) {
+			compiledText = strings.ReplaceAll(dotfile.TemplateText, globalVar.Name, globalVar.Value)
+		}
+	}
 
 	for _, slot := range slots {
 		if strings.Contains(compiledText, slot.slotText) {

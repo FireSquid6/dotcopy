@@ -70,8 +70,14 @@ func Dotcopy() string {
 		return "Error parsing dotfiles"
 	}
 
+	globalVars, err := ParseGlobalVars(fs, localConfig)
+	if err != nil {
+		log.Println(err)
+		return "Error parsing global vars"
+	}
+
 	for _, dotfile := range dotfiles {
-		text, filepath := CompileDotfile(dotfile)
+		text, filepath := CompileDotfile(dotfile, globalVars)
 
 		err := fs.WriteFile(filepath, text)
 		if err != nil {
@@ -89,12 +95,6 @@ func Dotcopy() string {
 
 	return ""
 }
-
-const (
-	CHANGE_NOTIFICATION  = "Dotcopy detected a change in your dotfiles. Recompiling..."
-	FAIL_NOTIFICATION    = "Dotcopy failed to compile your dotfiles. Run `dotcopy build` for more info."
-	SUCCESS_NOTIFICATION = "Dotcopy successfully compiled your dotfiles. Make sure to reload."
-)
 
 func Watch() error {
 	// run the bash script

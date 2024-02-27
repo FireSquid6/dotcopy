@@ -10,7 +10,7 @@ func TestCompileDotfile(t *testing.T) {
 		SlotText:     "--- {{name}}\nWorld\n---",
 	}
 
-	compiledText, _ := CompileDotfile(dotfile)
+	compiledText, _ := CompileDotfile(dotfile, []GlobalVar{})
 	expected := "Hello, World!"
 	if compiledText != expected {
 		t.Errorf("expected %s, got %s", expected, compiledText)

@@ -27,6 +27,11 @@ type LocalConfig struct {
 	MachineDirectory string `yaml:"machine_directory"`
 }
 
+type GlobalVar struct {
+	Name  string `yaml:"name"`
+	Value string `yaml:"value"`
+}
+
 func ParseDotfiles(fs Filesystem, localConfig LocalConfig) ([]Dotfile, error) {
 	yamlData, err := unmarshalYaml(fs, path.Join(localConfig.RootFilepath, "dotcopy.yaml"))
 	if err != nil {
@@ -109,4 +114,19 @@ func ParseLocalConfig(fs Filesystem) (LocalConfig, error) {
 	}
 
 	return localConfig, nil
+}
+
+func ParseGlobalVars(fs Filesystem, localconfig LocalConfig) ([]GlobalVar, error) {
+	filepath := path.Join(localconfig.RootFilepath, "vars.yaml")
+
+	globalVars := []GlobalVar{}
+	globalVarText, err := fs.ReadFile(filepath)
+
+	if err != nil {
+		return globalVars, err
+	}
+
+	err = yaml.Unmarshal([]byte(globalVarText), &globalVars)
+
+	return globalVars, nil
 }
