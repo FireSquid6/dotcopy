@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/fsnotify/fsnotify"
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"
@@ -34,7 +35,14 @@ func main() {
 				Name:  "watch",
 				Usage: "Starts the file watcher. Also probably managed by systemd.",
 				Action: func(c *cli.Context) error {
-					Watch()
+					localconfig, err := ParseLocalConfig(MakeRealFilesystem())
+
+					if err != nil {
+						fmt.Println("Error parsing localconfig. Does ~/.config/dotcopy/localconfig.yaml exist?")
+						return nil
+					}
+
+					watch(localconfig.RootFilepath)
 					return nil
 				},
 			},
@@ -96,8 +104,53 @@ func Dotcopy() string {
 	return ""
 }
 
-func Watch() error {
-	// run the bash script
+func watch(paths ...string) {
+	if len(paths) < 1 {
+		os.Exit(1)
+	}
 
-	return nil
+	// Create a new watcher.
+	w, err := fsnotify.NewWatcher()
+	if err != nil {
+		os.Exit(1)
+	}
+	defer w.Close()
+
+	// Start listening for events.
+	go watchLoop(w)
+
+	// Add all paths from the commandline.
+	for _, p := range paths {
+		err = w.Add(p)
+		if err != nil {
+			os.Exit(1)
+		}
+	}
+
+	fmt.Println("Watching", paths)
+	<-make(chan struct{}) // Block forever
+}
+
+func watchLoop(w *fsnotify.Watcher) {
+	i := 0
+	for {
+		select {
+		// Read from Errors.
+		case err, ok := <-w.Errors:
+			if !ok { // Channel was closed (i.e. Watcher.Close() was called).
+				return
+			}
+			fmt.Println("error:", err)
+		// Read from Events.
+		case e, ok := <-w.Events:
+			if !ok { // Channel was closed (i.e. Watcher.Close() was called).
+				return
+			}
+
+			// Just print the event nicely aligned, and keep track how many
+			// events we've seen.
+			i++
+			fmt.Println(i, e)
+		}
+	}
 }
