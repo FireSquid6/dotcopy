@@ -113,18 +113,16 @@ func Watch() error {
 		log.Fatalln(err)
 	}
 
-	go func() {
-		for {
-			select {
-			case event := <-w.Event:
-				fmt.Println(event) // Print the event's info.
-			case err := <-w.Error:
-				log.Fatalln(err)
-			case <-w.Closed:
-				return
-			}
+	for {
+		select {
+		case event := <-w.Event:
+			fmt.Println(event) // Print the event's info.
+		case err := <-w.Error:
+			log.Fatalln(err)
+		case <-w.Closed:
+			return nil
 		}
-	}()
+	}
 
 	return nil
 }
