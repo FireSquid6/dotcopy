@@ -49,9 +49,13 @@ func ParseDotfiles(fs Filesystem, localConfig LocalConfig) ([]Dotfile, error) {
 			dotfile.TemplateText = templateText
 		}
 
-		slotText, err := fs.ReadFile(dotfile.SlotFilepath)
-		if err == nil {
-			dotfile.SlotText = slotText
+		// if the slotfile is empty, we just don't want to bother
+		// if there is no slotfile, we just copy the dotfile as is
+		if yamlObj.Slotfile != "" {
+			slotText, err := fs.ReadFile(dotfile.SlotFilepath)
+			if err == nil {
+				dotfile.SlotText = slotText
+			}
 		}
 
 		dotfiles = append(dotfiles, dotfile)
