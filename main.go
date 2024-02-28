@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/fsnotify/fsnotify"
-	"github.com/urfave/cli/v2"
 	"log"
 	"os"
+
+	"github.com/fsnotify/fsnotify"
+	"github.com/martinlindhe/notify"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
@@ -36,7 +38,6 @@ func main() {
 				Usage: "Starts the file watcher. Also probably managed by systemd.",
 				Action: func(c *cli.Context) error {
 					localconfig, err := ParseLocalConfig(MakeRealFilesystem())
-
 					if err != nil {
 						fmt.Println("Error parsing localconfig. Does ~/.config/dotcopy/localconfig.yaml exist?")
 						return nil
@@ -81,7 +82,6 @@ func Dotcopy() string {
 	globalVars, err := ParseGlobalVars(fs, localConfig)
 	if err != nil {
 		log.Println(err)
-		return "Error parsing global vars"
 	}
 
 	for _, dotfile := range dotfiles {
@@ -149,6 +149,9 @@ func watchLoop(w *fsnotify.Watcher) {
 
 			// Just print the event nicely aligned, and keep track how many
 			// events we've seen.
+			notify.Notify("Dotcopy", "Dotcopy: Change detected", "rebuilding dotfiles...", "")
+			Dotcopy()
+			notify.Notify("Dotcopy", "Dotcopy: Dotfiles Built", "Remember to reload your apps! (i3, polybar, etc.)", "")
 			i++
 			fmt.Println(i, e)
 		}
