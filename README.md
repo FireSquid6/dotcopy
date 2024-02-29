@@ -49,3 +49,17 @@ files:
 ```
 
 Now, if I replace the font parameter in a local kitty.conf, I can run `dotcopy build` to build the kitty.conf and put it in the correct place. Dotcopy will automatically detect which profile to use with either the `-p` tag or the system hostname
+
+# FAQ
+
+## Why use this when home manger exists?
+
+Home manager is great! However, it has some things that make it not perfect for everyone:
+
+- it only works on nix
+- it forces everything to be in nix (not a bad thing, just not what everyone wants)
+- you can't do the different stuff for different machines with home-manager (ig you could import stuff from a different file in gitignore maybe but that's a pain)
+
+## Doesn't this waste disk space having nearly duplicate files?
+
+cry me a river about your few kilobytes.
