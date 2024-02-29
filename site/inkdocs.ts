@@ -6,17 +6,11 @@ import fs from "fs";
 import PageLayout from "./layouts/page";
 
 export function getOptions(): InkdocsOptions {
-  // ensure content folder exists
-  if (!fs.existsSync("content")) {
-    fs.mkdirSync("content");
-  }
-  // copy README to content folder
-  fs.copyFileSync("../README.md", "content/index.md");
-
   const baseHtml = `<html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/styles.css" />
   <title>My App</title>
 
   <meta name="description" content="I have made a very cool app" />
