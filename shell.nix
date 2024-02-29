@@ -1,5 +1,5 @@
 let
-  unstable = import (fetchTarball https://nixos.org/channels/nixos-unstable/nixexprs.tar.xz) { };
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in
 { pkgs ? import <nixpkgs> { } }:
 with pkgs; mkShell {
@@ -8,5 +8,6 @@ with pkgs; mkShell {
     inotify-tools
     libnotify
     go
+    unstable.bun
   ];
 }
