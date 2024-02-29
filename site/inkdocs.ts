@@ -2,8 +2,17 @@ import { InkdocsOptions } from "inkdocs";
 import swapRouter from "inkdocs/plugins/swap-router";
 import "@kitajs/html/register";
 import { devserverPlugin } from "inkdocs-server";
+import fs from "fs";
+import PageLayout from "./layouts/page";
 
 export function getOptions(): InkdocsOptions {
+  // ensure content folder exists
+  if (!fs.existsSync("content")) {
+    fs.mkdirSync("content");
+  }
+  // copy README to content folder
+  fs.copyFileSync("../README.md", "content/index.md");
+
   const baseHtml = `<html>
 <head>
   <meta charset="UTF-8" />
@@ -22,25 +31,12 @@ export function getOptions(): InkdocsOptions {
     buildFolder: "build",
     contentFolder: "content",
     baseHtml,
-    layouts: new Map([
-      // insert your layouts here
-    ]),
+    layouts: new Map([["page", PageLayout]]),
     craftsmen: [],
     layoutTree: {
       path: "",
-      layoutName: "",
-      children: [
-        {
-          path: "documentation",
-          layoutName: "docs",
-          children: [],
-        },
-        {
-          path: "blog",
-          layoutName: "blogpost",
-          children: [],
-        },
-      ],
+      layoutName: "page",
+      children: [],
     },
     plugins: [swapRouter({}), devserverPlugin()],
     server: {
