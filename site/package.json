@@ -19,6 +19,7 @@
     "@kitajs/html": "^3.0.11",
     "@tailwindcss/typography": "^0.5.10",
     "inkdocs": "^1.0.0",
+    "inkdocs-highlight-plugin": "^1.0.0",
     "inkdocs-server": "latest"
   }
 }

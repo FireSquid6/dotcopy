@@ -24,6 +24,7 @@ go.work
 
 # the executable file
 dotcopy
+
+# javascript stuff
 node_modules
-content
 build

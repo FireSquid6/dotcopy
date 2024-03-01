@@ -3,5 +3,26 @@
 body {
   font-family: Roboto, mono;
   color: #ffffff;
-  background-color: #0e1921;
+  background-color: #1c1c1b;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+pre {
+  background-color: #121110;
+  padding: 1em;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+blockquote {
+  border-left: 3px solid #ffffff;
+  padding-left: 1em;
+  margin-left: 0;
+  color: #ffffff;
+}
+
+li {
+  margin-bottom: 0.5em;
 }

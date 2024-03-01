@@ -2,8 +2,9 @@ import { InkdocsOptions } from "inkdocs";
 import swapRouter from "inkdocs/plugins/swap-router";
 import "@kitajs/html/register";
 import { devserverPlugin } from "inkdocs-server";
-import fs from "fs";
 import PageLayout from "./layouts/page";
+// this needs to be fixed
+// import SyntaxHighlighter from "inkdocs-highlight-plugin";
 
 export function getOptions(): InkdocsOptions {
   const baseHtml = `<html>
@@ -11,7 +12,7 @@ export function getOptions(): InkdocsOptions {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="/styles.css" />
-  <title>My App</title>
+  <title>Dotcopy</title>
 
   <meta name="description" content="I have made a very cool app" />
   <meta name="author" content="someone" />
