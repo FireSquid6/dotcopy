@@ -1,6 +1,6 @@
 module github.com/firesquid6/dotcopy
 
-go 1.21.5
+go 1.21.7
 
 require gopkg.in/yaml.v2 v2.4.0
 

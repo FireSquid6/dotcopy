@@ -7,7 +7,7 @@ with pkgs; mkShell {
     nodejs_20
     inotify-tools
     libnotify
-    go
+    unstable.go
     unstable.bun
   ];
 }
