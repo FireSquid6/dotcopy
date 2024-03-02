@@ -15,4 +15,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: linux
+          goversion: 1.21.6
+          sha256sum: true
           goarch: amd64
