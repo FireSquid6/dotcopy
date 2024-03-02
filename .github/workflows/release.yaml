@@ -25,5 +25,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
-          goversion: "0.21.6"
+          goversion: "1.21.6"
           extra_files: LICENSE README.md
