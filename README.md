@@ -4,6 +4,20 @@ Dotcopy tries to solve the following problem:
 
 > I want to have the same dotfiles across all of my machines, but with a couple change between them
 
+# Installation
+
+For a quick install:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/FireSquid6/dotcopy/main/scripts/install.sh | bash
+```
+
+You can also manually download and extract the tarball from the latest release.
+
+## Package Managers
+
+We're looking for maintainers! If you'd like to package dotcopy on your distro I would highly encourage you to do so!
+
 # Example
 
 Let's imagine the following dotfile (it's my kitty config):
