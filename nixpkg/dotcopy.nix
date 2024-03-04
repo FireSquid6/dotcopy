@@ -1,23 +1,27 @@
-
-{ 
-  lib
-, buildGo121Module
-, fetchFromGitHub
+{ lib
+, buildGoModule
+, fetchurl
 }:
 
-buildGo121Module rec {
+buildGoModule rec {
   pname = "dotcopy";
-  version = "0.2.0";
+  version = "0.2.8";
 
-  src = fetchFromGitHub {
-    owner = "firesquid6";
-    repo = pname;
-    rev = "refs/tags/v${version}";
-    sha256 = "WlrBG12SF1a+PpxArcgixZkWLa7t8bq59uCRWzQQtow=";
+  src = fetchurl {
+    url = "https://github.com/firesquid6/dotcopy/releases/download/v${version}/dotcopy-v${version}-linux-amd64.tar.gz";
+    hash = "sha256-cfd5e9d0634fec0ea965dc656dfd21be";
   };
 
-  subPackages = [ "." ];
-  vendorSha256 = lib.fakeSha256;
+  vendorHash = "sha256-cTpDJhcw0JUClpZVEGchWGNSKPX2zhZW+MVGgWrxcrY=";
+
+  buildPhase = ''
+    tar -xvf dotcopy-v${version}-linux-amd64.tar.gz -C ./
+  '';
+  installPhase = ''
+    mkdir -p $out/bin
+    cp dotcopy $out/bin
+  '';
+
 
   meta = with lib; {
     description = "A linux dotfile manager";

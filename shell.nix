@@ -9,5 +9,6 @@ with pkgs; mkShell {
     libnotify
     go
     unstable.bun
+    wget
   ];
 }
