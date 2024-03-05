@@ -5,7 +5,7 @@
 
 buildGoModule rec {
   pname = "dotcopy";
-  version = "0.2.10";
+  version = "0.2.11";
 
   src = fetchFromGitHub {
     owner = "firesquid6";
