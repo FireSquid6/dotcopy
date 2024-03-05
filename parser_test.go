@@ -10,7 +10,7 @@ func TestParseDotfiles(t *testing.T) {
 		"/dotfiles/dotcopy.yaml": `---
 - template: template.txt
   slotfile: slotfile.txt
-  location: /path/to/somewhere/compiledfile.txt`,
+  location: ~/somewhere/compiledfile.txt`,
 		"/dotfiles/template.txt":         "template text",
 		"/dotfiles/machine/slotfile.txt": "slot text",
 	})
@@ -30,7 +30,7 @@ func TestParseDotfiles(t *testing.T) {
 		SlotText:         "slot text",
 		TemplateFilepath: "/dotfiles/template.txt",
 		SlotFilepath:     "/dotfiles/machine/slotfile.txt",
-		CompiledFilepath: "/path/to/somewhere/compiledfile.txt",
+		CompiledFilepath: "/home/user/somewhere/compiledfile.txt",
 	}
 
 	if !reflect.DeepEqual(dotfiles[0], expected) {

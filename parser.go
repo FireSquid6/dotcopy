@@ -50,7 +50,7 @@ func ParseDotfiles(fs Filesystem, localConfig LocalConfig) ([]Dotfile, error) {
 			SlotText:         "",
 		}
 
-		if strings.HasPrefix(dotfile.CompiledFilepath, "~") {
+		if strings.HasPrefix(dotfile.CompiledFilepath, "~/") {
 			dotfile.CompiledFilepath = path.Join(fs.Homedir(), dotfile.CompiledFilepath[1:])
 		}
 
