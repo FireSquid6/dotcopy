@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"strings"
 
 	"gopkg.in/yaml.v2"
 )
@@ -49,6 +50,10 @@ func ParseDotfiles(fs Filesystem, localConfig LocalConfig) ([]Dotfile, error) {
 			SlotText:         "",
 		}
 
+		if strings.HasPrefix(dotfile.CompiledFilepath, "~") {
+			dotfile.CompiledFilepath = path.Join(fs.Homedir(), dotfile.CompiledFilepath[1:])
+		}
+
 		templateText, err := fs.ReadFile(dotfile.TemplateFilepath)
 		if err == nil {
 			dotfile.TemplateText = templateText
@@ -87,10 +92,7 @@ func unmarshalYaml(fs Filesystem, filepath string) ([]DotcopyYaml, error) {
 }
 
 func ParseLocalConfig(fs Filesystem) (LocalConfig, error) {
-	dirname, err := os.UserHomeDir()
-	if err != nil {
-		log.Fatal(err)
-	}
+	dirname := fs.Homedir()
 
 	hostname, err := os.Hostname()
 	if err != nil {
@@ -121,7 +123,6 @@ func ParseGlobalVars(fs Filesystem, localconfig LocalConfig) ([]GlobalVar, error
 
 	globalVars := []GlobalVar{}
 	globalVarText, err := fs.ReadFile(filepath)
-
 	if err != nil {
 		return globalVars, err
 	}

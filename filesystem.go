@@ -8,6 +8,7 @@ type Filesystem interface {
 	ReadFile(filepath string) (string, error)
 	WriteFile(filepath string, content string) error
 	FileExists(filepath string) (bool, error)
+	Homedir() string
 }
 
 type RealFilesystem struct{}
@@ -66,6 +67,19 @@ func (fs MockFilesystem) FileExists(filepath string) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (fs MockFilesystem) Homedir() string {
+	return "/home/user"
+}
+
+func (fs RealFilesystem) Homedir() string {
+	dirname, err := os.UserHomeDir()
+	if err != nil {
+		panic(err)
+	}
+
+	return dirname
 }
 
 func MakeMockFilesystem(files map[string]string) MockFilesystem {
