@@ -5,7 +5,7 @@
 
 buildGoModule rec {
   pname = "dotcopy";
-  version = "0.2.9";
+  version = "0.2.10";
 
   src = fetchFromGitHub {
     owner = "firesquid6";
@@ -14,7 +14,10 @@ buildGoModule rec {
     hash = "sha256-33cH8Yz2cMZzaoalniRjwy6ooAmy8rhQqf9ZeprpklA=";
   };
 
+  doCheck = false;
   vendorSha256 = lib.fakeSha256;
+
+  subPackages = [ "." ];
 
   meta = with lib; {
     description = "A linux dotfile manager";
