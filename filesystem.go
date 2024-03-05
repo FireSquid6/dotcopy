@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"path"
 )
 
 type Filesystem interface {
@@ -23,7 +24,15 @@ func (fs RealFilesystem) ReadFile(filepath string) (string, error) {
 }
 
 func (fs RealFilesystem) WriteFile(filepath string, content string) error {
-	err := os.WriteFile(filepath, []byte(content), 0644)
+	// ensure the directory exists
+	dirname := path.Dir(filepath)
+
+	err := os.MkdirAll(dirname, 0755)
+	if err != nil {
+		return err
+	}
+
+	err = os.WriteFile(filepath, []byte(content), 0644)
 	if err != nil {
 		return err
 	}
