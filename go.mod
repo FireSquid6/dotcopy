@@ -1,7 +1,5 @@
 module github.com/firesquid6/dotcopy
 
-go 1.21.6
-
 require gopkg.in/yaml.v2 v2.4.0
 
 require (
@@ -22,3 +20,5 @@ require (
 	github.com/urfave/cli/v2 v2.27.1
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 )
+
+go 1.21.6
