@@ -1,18 +1,21 @@
 { lib
-, buildGoModule
+, stdenv
 , fetchzip
 }:
 
-buildGoModule rec {
+stdenv.mkDerivation rec {
   pname = "dotcopy";
-  version = "0.2.8";
+  version = "0.2.9";
 
   src = fetchzip {
     url = "https://github.com/firesquid6/dotcopy/releases/download/v${version}/dotcopy-v${version}-linux-amd64.tar.gz";
-    sha256 = lib.fakeSha256;
+    hash = "sha256-QBEGtE7r5B39cILAg+Ev1cwfu4nXiMk2jn1NZVFHnyk=";
   };
 
-  vendorSha256 = lib.fakeSha256;
+  installPhase = ''
+    mkdir -p $out/bin
+    mv dotcopy $out/bin
+  '';
 
   meta = with lib; {
     description = "A linux dotfile manager";
