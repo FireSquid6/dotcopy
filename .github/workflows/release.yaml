@@ -26,4 +26,5 @@ jobs:
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
           goversion: "1.21.6"
-          extra_files: LICENSE README.md
+          sha256sum: true
+          extra_files: ""
