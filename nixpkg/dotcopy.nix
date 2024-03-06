@@ -8,7 +8,7 @@ buildGoModule rec {
   version = "0.2.14";
 
   src = fetchzip {
-    url = "https://github.com/FireSquid6/dotcopy/archive/refs/tags/v0.2.14.zip";
+    url = "https://github.com/FireSquid6/dotcopy/archive/refs/tags/v${version}.zip";
     hash = "sha256-oVMsIZUJ7xOBwSlJF+RUIYG0dPMTZ3ftDd9cpRytl7w=";
   };
 
