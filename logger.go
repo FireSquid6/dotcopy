@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/martinlindhe/notify"
 	"log"
+
+	"github.com/martinlindhe/notify"
 )
 
 type Logger interface {
 	Info(msg string)
-	Error(err error)
+	Error(err string)
 	SuccessfulBuild()
 	Notification(title string, msg string)
 }
@@ -22,15 +23,17 @@ func (l RealLogger) Info(msg string) {
 		log.Println(msg)
 	}
 }
-func (l RealLogger) Error(err error) {
+
+func (l RealLogger) Error(err string) {
 	if l.useStdout {
 		log.Println(err)
 	}
 
 	if l.useNotification {
-		notify.Notify("Dotcopy", "Error", err.Error(), "")
+		notify.Notify("Dotcopy", "Error", err, "")
 	}
 }
+
 func (l RealLogger) SuccessfulBuild() {
 	if l.useStdout {
 		log.Println("Dotfiles compiled successfully!")
@@ -40,6 +43,7 @@ func (l RealLogger) SuccessfulBuild() {
 		notify.Notify("Dotcopy", "Dotfiles compiled successfully!", "", "")
 	}
 }
+
 func (l RealLogger) Notification(title string, msg string) {
 	if l.useNotification {
 		// send notification
