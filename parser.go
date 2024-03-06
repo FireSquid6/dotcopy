@@ -59,12 +59,28 @@ func ParseDotfiles(fs Filesystem, localConfig LocalConfig) ([]Dotfile, error) {
 			dotfile.TemplateText = templateText
 		}
 
+		// this is kinda a mess
 		// if the slotfile is empty, we just don't want to bother
 		// if there is no slotfile, we just copy the dotfile as is
 		if yamlObj.Slotfile != "" {
-			slotText, err := fs.ReadFile(dotfile.SlotFilepath)
-			if err == nil {
+			// first we see if the slotfile exists
+			exists, err := fs.FileExists(dotfile.SlotFilepath)
+
+			if exists && err == nil {
+				// if it does, we read it
+				slotText, err := fs.ReadFile(dotfile.SlotFilepath)
+				if err != nil {
+					return nil, err
+				}
 				dotfile.SlotText = slotText
+			} else {
+				// if that slotfile doesn't exist, we check to see if _default as the machine directory exists
+				dotfile.SlotFilepath = path.Join(localConfig.RootFilepath, "_default", yamlObj.Slotfile)
+				text, err := fs.ReadFile(dotfile.SlotFilepath)
+				if err != nil {
+					return nil, err
+				}
+				dotfile.SlotText = text
 			}
 		}
 

@@ -9,6 +9,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+const VERSION = "0.3.0"
+
 func main() {
 	app := &cli.App{
 		Name: "dotcopy",
@@ -26,7 +28,7 @@ func main() {
 				Value:   false,
 			},
 		},
-		Usage: "A dotfile compiler",
+		Usage: "Builds your dotfiles. See https://dotcopy.firesquid.co",
 		Action: func(c *cli.Context) error {
 			logger := MakeRealLogger(c.Bool("disable-notifications"), c.Bool("silent"))
 			output := Dotcopy(logger)
@@ -45,6 +47,14 @@ func main() {
 				Usage: "Initializes a basic localconfig",
 				Action: func(c *cli.Context) error {
 					fmt.Println("Not implemented yet")
+					return nil
+				},
+			},
+			{
+				Name:  "version",
+				Usage: "Prints the version of dotcopy",
+				Action: func(c *cli.Context) error {
+					fmt.Println("v" + VERSION)
 					return nil
 				},
 			},
