@@ -1,21 +1,19 @@
 { lib
 , buildGoModule
-, fetchFromGitHub
+, fetchzip
 }:
 
 buildGoModule rec {
   pname = "dotcopy";
   version = "0.2.14";
 
-  src = fetchFromGitHub {
-    owner = "firesquid6";
-    repo = "dotcopy";
-    rev = "v${version}";
-    hash = "sha256-33cH8Yz2cMZzaoalniRjwy6ooAmy8rhQqf9ZeprpklA=";
+  src = fetchzip {
+    url = "https://github.com/FireSquid6/dotcopy/archive/refs/tags/v0.2.14.zip";
+    hash = "sha256-oVMsIZUJ7xOBwSlJF+RUIYG0dPMTZ3ftDd9cpRytl7w=";
   };
 
   doCheck = false;
-  vendorSha256 = lib.fakeSha256;
+  vendorSha256 = null;
 
   subPackages = [ "." ];
 

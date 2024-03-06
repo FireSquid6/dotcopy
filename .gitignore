@@ -28,3 +28,5 @@ dotcopy
 # javascript stuff
 node_modules
 build
+
+result
