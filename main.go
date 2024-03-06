@@ -30,7 +30,7 @@ func main() {
 		},
 		Usage: "Builds your dotfiles. See https://dotcopy.firesquid.co",
 		Action: func(c *cli.Context) error {
-			logger := MakeRealLogger(c.Bool("disable-notifications"), c.Bool("silent"))
+			logger := MakeRealLogger(!c.Bool("disable-notifications"), !c.Bool("silent"))
 			output := Dotcopy(logger)
 
 			if output == "" {
