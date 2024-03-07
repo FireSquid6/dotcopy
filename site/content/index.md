@@ -1,5 +1,7 @@
 # dotcopy
 
+---
+
 Dotcopy tries to solve the following problem:
 
 > I want to have the same dotfile templates across all of my machines, but with a couple change between them
@@ -29,6 +31,8 @@ put. (default: false)
 
 # Install
 
+---
+
 You can install dotcopy using an install script like so:
 
 ```
@@ -38,6 +42,8 @@ curl -fsSL https://dotcopy.firesquid.co/install.sh | bash
 Additionally, dotcopy has a nixkpg called `dotcopy`. You can install that however you'd like.
 
 # Walkthrough
+
+---
 
 ## Initializing
 
@@ -137,6 +143,8 @@ Now in my `chisato` machine directory, I create a file called `font-file.slot.tx
 You can repeat this process for all of your dotfiles.
 
 # FAQ
+
+---
 
 ## Why use this when home manger exists?
 

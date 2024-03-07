@@ -5,7 +5,7 @@ const PageLayout: Layout = (children) => {
     <div id="layout">
       <main id="content">{children}</main>
       <footer>
-        <p>© 2021</p>
+        <p>© Jonathan Deiss 2024</p>
       </footer>
     </div>
   );
