@@ -14,9 +14,9 @@ export function getOptions(): InkdocsOptions {
   <link rel="stylesheet" href="/styles.css" />
   <title>Dotcopy</title>
 
-  <meta name="description" content="I have made a very cool app" />
-  <meta name="author" content="someone" />
-  <meta name="keywords" content="documentation, generator, inkdocs, html, css, htmx, inkdocs, ink, docs, documentation, generator" />
+  <meta name="description" content="Keep your dotfiles DRY" />
+  <meta name="author" content="Firesquid6" />
+  <meta name="keywords" content="linux, dotfiles, dotcopy, html, programming, dot, copy, file, dotfiles, manager, nix, nixos, DRY, dry" />
 </head>
   {slot}
 </html>`;
